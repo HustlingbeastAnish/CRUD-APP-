@@ -34,15 +34,17 @@ exports.create = (req, res) => {
 //To retreive and return all users and to return a single user
 exports.find = (req, res) => {
   // We will check whether we have the id of a user to access the info
-  if (req.query.id) {
-    const id = req.query.id;
+  if (req.params.id) {
+    const id = req.params.id;
 
     Userdb.findById(id)
       .then((data) => {
         if (!data) {
-          res.status(404).send({
-            message: `No user with the id ${id} exits in the database`,
-          });
+          res
+            .status(404)
+            .send({
+              message: `No user with the id ${id} exits in the database`,
+            });
         } else {
           res.send(data);
         }
@@ -52,19 +54,19 @@ exports.find = (req, res) => {
           .status(500)
           .send({ message: `Error retreiving the user with the ${id}` });
       });
-  } else {
-    Userdb.find()
-      .then((user) => {
-        res.send(user);
-      })
-      .catch((error) => {
-        res.status(500).send({
-          message:
-            err.message || "Error Occured while retrieving the user data",
-        });
-      });
   }
+
+  Userdb.find()
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: err.message || "Error Occured while retrieving the user data",
+      });
+    });
 };
+
 // To Update a new identified user by the user id
 exports.update = (req, res) => {
   if (!req.body) {

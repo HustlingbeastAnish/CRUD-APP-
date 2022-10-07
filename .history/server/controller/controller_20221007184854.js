@@ -33,38 +33,17 @@ exports.create = (req, res) => {
 };
 //To retreive and return all users and to return a single user
 exports.find = (req, res) => {
-  // We will check whether we have the id of a user to access the info
-  if (req.query.id) {
-    const id = req.query.id;
-
-    Userdb.findById(id)
-      .then((data) => {
-        if (!data) {
-          res.status(404).send({
-            message: `No user with the id ${id} exits in the database`,
-          });
-        } else {
-          res.send(data);
-        }
-      })
-      .catch((err) => {
-        res
-          .status(500)
-          .send({ message: `Error retreiving the user with the ${id}` });
+  Userdb.find()
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: err.message || "Error Occured while retrieving the user data",
       });
-  } else {
-    Userdb.find()
-      .then((user) => {
-        res.send(user);
-      })
-      .catch((error) => {
-        res.status(500).send({
-          message:
-            err.message || "Error Occured while retrieving the user data",
-        });
-      });
-  }
+    });
 };
+
 // To Update a new identified user by the user id
 exports.update = (req, res) => {
   if (!req.body) {
@@ -89,25 +68,17 @@ exports.update = (req, res) => {
 
 // To delete a user with identified user id
 exports.delete = (req, res) => {
+  if (!req.body) {
+    res.status(400).send({ message: " Data to be updated cannot be empty" });
+  }
   const id = req.params.id;
-  // if (!req.body) {
-  //   res.status(400).send({ message: " Data to be deleted cannot be empty" });
-  // }
-  Userdb.findByIdAndDelete(id)
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot delete the user with ${id} , Maybe Wrong id `,
-        });
-      } else {
-        res.send({
-          message: ` The user with the ${id} was deleted successfully`,
-        });
-      }
-    })
-    .catch((error) => {
-      res
-        .status(500)
-        .send({ message: `Could not delete the user with the id ${id}` });
-    });
+  Userdb.findByIdAndDelete(id).then((data) => {
+    if (!data) {
+      res.status(404).send({
+        message: `Cannot delete the user with ${id} , Maybe Wrong id `,
+      });
+    } else {
+      res.send({ message: ` The user with the ${id}` });
+    }
+  });
 };

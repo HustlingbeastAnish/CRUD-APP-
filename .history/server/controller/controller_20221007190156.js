@@ -34,8 +34,8 @@ exports.create = (req, res) => {
 //To retreive and return all users and to return a single user
 exports.find = (req, res) => {
   // We will check whether we have the id of a user to access the info
-  if (req.query.id) {
-    const id = req.query.id;
+  if (req.params.id) {
+    const id = req.params.id;
 
     Userdb.findById(id)
       .then((data) => {

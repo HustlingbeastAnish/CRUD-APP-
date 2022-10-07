@@ -10,7 +10,6 @@ exports.homeRoutes = (req, res) => {
     })
     .catch((err) => {
       res.send(err);
-      process.exit(1);
     });
 };
 
