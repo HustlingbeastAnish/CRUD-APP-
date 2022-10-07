@@ -49,8 +49,6 @@ exports.update = (req, res) => {
   if (!req.body) {
     res.status(400).send({ message: "Data to be updated cannot be empty" });
   }
-
-  const id = req.params.id;
 };
 
 // To delete a user with identified user id

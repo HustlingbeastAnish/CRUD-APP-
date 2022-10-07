@@ -33,25 +33,13 @@ exports.create = (req, res) => {
 };
 //To retreive and return all users and to return a single user
 exports.find = (req, res) => {
-  Userdb.find()
-    .then((user) => {
-      res.send(user);
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message: err.message || "Error Occured while retrieving the user data",
-      });
-    });
+  Userdb.find().then((user) => {
+    res.send(user);
+  });
 };
 
 // To Update a new identified user by the user id
-exports.update = (req, res) => {
-  if (!req.body) {
-    res.status(400).send({ message: "Data to be updated cannot be empty" });
-  }
-
-  const id = req.params.id;
-};
+exports.update = (req, res) => {};
 
 // To delete a user with identified user id
 exports.delete = (req, res) => {};

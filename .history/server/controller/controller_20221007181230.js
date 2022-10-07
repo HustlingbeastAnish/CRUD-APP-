@@ -38,20 +38,12 @@ exports.find = (req, res) => {
       res.send(user);
     })
     .catch((error) => {
-      res.status(500).send({
-        message: err.message || "Error Occured while retrieving the user data",
-      });
+      res.status(500).send({ message: err.message });
     });
 };
 
 // To Update a new identified user by the user id
-exports.update = (req, res) => {
-  if (!req.body) {
-    res.status(400).send({ message: "Data to be updated cannot be empty" });
-  }
-
-  const id = req.params.id;
-};
+exports.update = (req, res) => {};
 
 // To delete a user with identified user id
 exports.delete = (req, res) => {};
